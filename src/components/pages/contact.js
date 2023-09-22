@@ -1,6 +1,18 @@
 import SideBar from "../layouts/sidebar";
 
+import React from "react";
+import GoogleMapReact from 'google-map-react';
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 function Contact() {
+    const defaultProps = {
+        center: {
+            lat: 10.99835602,
+            lng: 77.01502627    
+        },
+        zoom: 11
+    };
     return (
         <div >
 
@@ -39,10 +51,21 @@ function Contact() {
                 </div>
             </section>
 
-            {/* <div class="map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-                    height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            <div class="map" >
+                <div style={{ height: '100vh', width: '100%' }}>
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: "" }}
+                        defaultCenter={defaultProps.center}
+                        defaultZoom={defaultProps.zoom}
+                    >
+                        <AnyReactComponent
+                            lat={59.955413}
+                            lng={30.337844}
+                            text="My Marker"
+                        />
+                    </GoogleMapReact>
+                </div>
+
                 <div class="map-inside">
                     <i class="icon_pin"></i>
                     <div class="inside-widget">
@@ -53,7 +76,7 @@ function Contact() {
                         </ul>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
 
             <div class="contact-form spad">

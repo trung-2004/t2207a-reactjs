@@ -1,4 +1,3 @@
-import SideBar from "../layouts/sidebar";
 
 function Blog() {
     return (
