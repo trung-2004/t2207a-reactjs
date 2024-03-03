@@ -1,18 +1,21 @@
-import { useState } from "react";
-function Hero() {
-    const [item, setSetItem] = useState([
-        "Fresh Meat",
-        "Vegetable",
-        "Fruit & Nut Gifts",
-        "Fresh Berries",
-        "Ocean Foods",
-        "Butter & Eggs",
-        "Fastfood",
-        "Fresh Onion",
-        "Papayaya & Crisps",
-        "Oatmeal",
-        "Fresh Bananas",
-    ]);
+import { useState, useEffect } from "react";
+import api from "../../services/api";
+import url from "../../services/url";
+import { NavLink } from "react-router-dom";
+export default function Hero() {
+    const [categories, setCategories] = useState([]);
+
+    const loadCategories = async () => {
+        try {
+            const rs = await api.get(url.CATEGORY.LIST);
+
+            setCategories(rs.data);
+        } catch (err) {}
+    };
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
 
     const [menuHidden, setMenuhidden] = useState(false);
 
@@ -38,11 +41,13 @@ function Hero() {
                                 <span>All departments</span>
                             </div>
                             <ul id="menu">
-                                {item.map((item, index) => (
-                                    <li key={index}>
-                                        <a href="#">{item}</a>
-                                    </li>
-                                ))}
+                                {categories.map((item, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <NavLink to={`/category/${item.id}`}>{item.name}</NavLink>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </div>
@@ -55,7 +60,9 @@ function Hero() {
                                         <span class="arrow_carrot-down"></span>
                                     </div>
                                     <input type="text" placeholder="What do yo u need?" />
-                                    <button type="submit" class="site-btn">SEARCH</button>
+                                    <button type="submit" class="site-btn">
+                                        SEARCH
+                                    </button>
                                 </form>
                             </div>
                             <div class="hero__search__phone">
@@ -72,6 +79,5 @@ function Hero() {
                 </div>
             </div>
         </section>
-    )
+    );
 }
-export default Hero;
